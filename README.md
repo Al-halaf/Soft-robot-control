@@ -101,7 +101,7 @@ This project is **actively being developed**, with improvements including:
 
 ---
 
-## 🤝 Contributions & Feedback
+📚 Credits & Acknowledgments
 
-If you have ideas or improvements, feel free to **open an issue** or **submit a pull request**! 🚀
+This project includes contributions and references from various sources, including: 
 
