@@ -1,0 +1,436 @@
+<mujoco model="z1_with_soft_gripper">
+
+    <compiler angle="radian" meshdir="assets"/>
+
+    <option integrator="implicitfast"/>
+
+    <include file="soft_scene.xml"/>
+
+    <default>
+        <default class="z1">
+        <joint damping="1" frictionloss="1"/>
+        <general biastype="affine" gainprm="1000" biasprm="0 -1000 -100" forcerange="-30 30"/>
+        <default class="visual">
+            <geom type="mesh" group="2" contype="1" conaffinity="1"/>
+        </default>
+        <default class="collision">
+            <geom type="cylinder" group="3" mass="0" density="0"/>
+        </default>
+    </default>
+
+    <!-- Soft Gripper Defaults -->
+    <geom density="1" contype="1" conaffinity="1" rgba=".99 .99 .99 1" group="1"/>
+    <joint limited="true"/>
+    <site type="sphere" size="0.005"/>
+    <tendon width="0.001"/>
+
+    <default class="gripper_sticks_main">
+      <geom type="box" size="0.01 0.005 0.025" mass="0.01" contype="1" conaffinity="1"/>
+    </default>
+
+    <default class="finger_left_util">
+      <joint type="hinge" range="-0.2 0.05" damping="2"/>
+        <site pos="0 -0.025 0"/>
+        <geom type="box" pos="0 0.0125 0" size="0.005 0.005 0.025" mass="0.005" contype="1" conaffinity="1"/>
+    </default>
+
+    <default class="finger_right_util">
+      <joint type="hinge" range="-0.05 0.2" damping="2"/>
+      <site pos="0 0.025 0"/>
+      <geom type="box" pos="0 -0.0125 0" size="0.005 0.005 0.025" mass="0.005" contype="1" conaffinity="1"/>
+    </default>
+
+    <default class="finger_adduction">
+        <joint type="hinge" axis="0 1 0" damping="2" stiffness="2" limited="true" range="-0.01 0.01"/>
+    </default>
+
+    <default class="finger_twist">
+        <joint type="hinge" axis="1 0 0" damping="2" stiffness="2" limited="true" range="-0.01 0.01"/>
+    </default>
+
+    <default class="base">
+        <geom type="box" quat="0.7 0.7 0.7 0.7" rgba="0.3 0.3 0.7 1" size="0.05 0.04 0.01"/>
+    </default>
+  </default>
+
+  <asset>
+    <mesh file="z1_Link00.stl"/>
+    <mesh file="z1_Link01.stl"/>
+    <mesh file="z1_Link02.stl"/>
+    <mesh file="z1_Link03.stl"/>
+    <mesh file="z1_Link04.stl"/>
+    <mesh file="z1_Link05.stl"/>
+    <mesh file="z1_Link06.stl"/>
+  </asset>
+
+  <worldbody>
+    <body name="link00" childclass="z1">
+      <inertial pos="-0.00334984 -0.00013615 0.0249584" quat="-0.00692194 0.682592 0.00133293 0.730766" mass="0.472475"
+        diaginertia="0.000531375 0.000415207 0.000378658"/>
+      <geom class="visual" mesh="z1_Link00"/>
+      <geom size="0.0325 0.0255" pos="0 0 0.0255" class="collision"/>
+      <body name="link01" pos="0 0 0.0585">
+        <inertial pos="2.47e-06 -0.00025198 0.0231717" quat="0.708578 0.705633 0.000281462 -0.000355927" mass="0.673326"
+          diaginertia="0.00128328 0.000839362 0.000719308"/>
+        <joint name="joint1" axis="0 0 1" range="-2.61799 2.61799"/>
+        <geom class="visual" mesh="z1_Link01"/>
+        <body name="link02" pos="0 0 0.045">
+          <inertial pos="-0.110126 0.00240029 0.00158266" quat="0.00748058 0.707092 -0.0114473 0.70699" mass="1.19132"
+            diaginertia="0.0246612 0.0243113 0.00100468"/>
+          <joint name="joint2" axis="0 1 0" range="0 2.96706" damping="2"/>
+          <geom class="visual" mesh="z1_Link02"/>
+          <geom size="0.0325 0.051" quat="1 1 0 0" class="collision"/>
+          <geom size="0.0225 0.1175" pos="-0.1625 0 0" quat="1 0 1 0" class="collision"/>
+          <geom size="0.0325 0.0255" pos="-0.35 0 0" quat="1 1 0 0" class="collision"/>
+          <body name="link03" pos="-0.35 0 0">
+            <inertial pos="0.106092 -0.00541815 0.0347638" quat="0.540557 0.443575 0.426319 0.573839" mass="0.839409"
+              diaginertia="0.00954365 0.00938711 0.000558432"/>
+            <joint name="joint3" axis="0 1 0" range="-2.87979 0"/>
+            <geom class="visual" mesh="z1_Link03"/>
+            <geom size="0.02 0.058" pos="0.128 0 0.055" quat="1 0 1 0" class="collision"/>
+            <geom size="0.0325 0.0295" pos="0.2205 0 0.055" quat="0.5 -0.5 0.5 0.5" class="collision"/>
+            <body name="link04" pos="0.218 0 0.057">
+              <inertial pos="0.0436668 0.00364738 -0.00170192" quat="0.0390835 0.726445 -0.0526787 0.684087"
+                mass="0.564046" diaginertia="0.000981656 0.00094053 0.000302655"/>
+              <joint name="joint4" axis="0 1 0" range="-1.51844 1.51844"/>
+              <geom class="visual" mesh="z1_Link04"/>
+              <geom size="0.0325 0.0335" pos="0.072 0 0" class="collision"/>
+              <body name="link05" pos="0.07 0 0">
+                <inertial pos="0.0312153 0 0.00646316" quat="0.462205 0.535209 0.53785 0.45895" mass="0.389385"
+                  diaginertia="0.000558961 0.000547317 0.000167332"/>
+                <joint name="joint5" axis="0 0 1" range="-1.3439 1.3439"/>
+                <geom class="visual" mesh="z1_Link05"/>
+                <body name="link06" pos="0.0492 0 0">
+                  <inertial pos="0.0241569 -0.00017355 -0.00143876" quat="0.998779 0.0457735 -0.00663717 0.0173548"
+                    mass="0.288758" diaginertia="0.00018333 0.000147464 0.000146786"/>
+                  <joint name="joint6" axis="1 0 0" range="-2.79253 2.79253"/>
+                  <geom class="visual" mesh="z1_Link06"/>
+                  <geom size="0.0325 0.0255" pos="0.0255 0 0" quat="1 0 1 0" class="collision"/>
+
+                  <!-- Attach Soft Gripper Here -->
+                  <body name="base" pos="0.0255 0 0" quat="0 0 1 0">
+                    <site name="sBase" pos="0 0 0"/>
+                    <geom class="base" size="0.05 0.04 0.01" pos="0 0 0"/>
+                    <geom class="base" size="0.1 0.05 0.01" pos="0 0 0"/>
+                    <geom class="base" size="0.05 0.04 0.025" pos="0 0 0"/>
+
+                    <!-- FINGERS LEFT -->
+                    <body pos="0 0.075 -0.025" quat="0 0 -0.7071 0.7071">
+                      <body pos="0.0225 0 0">
+                        <geom class="gripper_sticks_main" name="g11"/>
+                        <geom class="finger_left_util"/>
+                        <joint name="joint7" class="finger_adduction"/>
+                        <joint name="joint8" class="finger_twist"/>
+                        <body pos="0.0225 0 0">
+                          <geom class="gripper_sticks_main" name="g112"/>
+                          <geom class="finger_left_util"/>
+                          <joint name="joint9" class="finger_left_util"/>
+                          <joint name="joint10" class="finger_twist"/>
+                          <site name="s112" class="finger_left_util" size="0.005"/>
+                          <body pos="0.0225 0 0">
+                            <geom class="gripper_sticks_main" name="g113"/>
+                            <geom class="finger_left_util"/>
+                            <joint name="joint11" class="finger_left_util"/>
+                            <joint name="joint12" class="finger_twist"/>
+                            <site name="s113" class="finger_left_util" size="0.005"/>
+                            <body pos="0.0225 0 0">
+                              <geom class="gripper_sticks_main" name="g114"/>
+                              <geom class="finger_left_util"/>
+                              <joint name="joint13" class="finger_left_util"/>
+                              <joint name="joint14" class="finger_twist"/>
+                              <site name="s114" class="finger_left_util" size="0.005"/>
+                              <body pos="0.0225 0 0">
+                                <geom class="gripper_sticks_main" name="g115"/>
+                                <geom class="finger_left_util"/>
+                                <joint name="joint15" class="finger_left_util"/>
+                                <joint name="joint16" class="finger_twist"/>
+                                <site name="s115" class="finger_left_util" size="0.005"/>
+                                <body pos="0.0225 0 0">
+                                  <geom class="gripper_sticks_main" name="g116"/>
+                                  <geom class="finger_left_util"/>
+                                  <joint name="joint17" class="finger_left_util"/>
+                                  <joint name="joint18" class="finger_twist"/>
+                                  <site name="s116" class="finger_left_util" size="0.005"/>
+                                  <body pos="0.0225 0 0">
+                                    <geom class="gripper_sticks_main" name="g117"/>
+                                    <geom class="finger_left_util"/>
+                                    <joint name="joint19" class="finger_left_util"/>
+                                    <joint name="joint20" class="finger_twist"/>
+                                    <site name="s117" class="finger_left_util" size="0.005"/>
+                                    <body pos="0.0225 0 0">
+                                      <geom class="gripper_sticks_main" name="g118"/>
+                                      <geom class="finger_left_util"/>
+                                      <joint name="joint21" class="finger_left_util"/>
+                                      <joint name="joint22" class="finger_twist"/>
+                                      <site name="s118" class="finger_left_util" size="0.005"/>
+                                    </body>
+                                  </body>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                    <body pos="0 0 -0.025" quat="0 0 -0.7071 0.7071">
+                      <body pos="0.0225 0 0">
+                        <geom class="gripper_sticks_main" name="g121"/>
+                        <geom class="finger_left_util"/>
+                        <joint name="joint23" class="finger_adduction"/>
+                        <joint name="joint24" class="finger_twist"/>
+                        <body pos="0.0225 0 0">
+                          <geom class="gripper_sticks_main" name="g122"/>
+                          <geom class="finger_left_util"/>
+                          <joint name="joint25" class="finger_left_util"/>
+                          <joint name="joint26" class="finger_twist"/>
+                          <site name="s122" class="finger_left_util" size="0.005"/>
+                          <body pos="0.0225 0 0">
+                            <geom class="gripper_sticks_main" name="g123"/>
+                            <geom class="finger_left_util"/>
+                            <joint name="joint27" class="finger_left_util"/>
+                            <joint name="joint28" class="finger_twist"/>
+                            <site name="s123" class="finger_left_util" size="0.005"/>
+                            <body pos="0.0225 0 0">
+                              <geom class="gripper_sticks_main" name="g124"/>
+                              <geom class="finger_left_util"/>
+                              <joint name="joint29" class="finger_left_util"/>
+                              <joint name="joint30" class="finger_twist"/>
+                              <site name="s124" class="finger_left_util" size="0.005"/>
+                              <body pos="0.0225 0 0">
+                                <geom class="gripper_sticks_main" name="g125"/>
+                                <geom class="finger_left_util"/>
+                                <joint name="joint31" class="finger_left_util"/>
+                                <joint name="joint32" class="finger_twist"/>
+                                <site name="s125" class="finger_left_util" size="0.005"/>
+                                <body pos="0.0225 0 0">
+                                  <geom class="gripper_sticks_main" name="g126"/>
+                                  <geom class="finger_left_util"/>
+                                  <joint name="joint33" class="finger_left_util"/>
+                                  <joint name="joint34" class="finger_twist"/>
+                                  <site name="s126" class="finger_left_util" size="0.005"/>
+                                  <body pos="0.0225 0 0">
+                                    <geom class="gripper_sticks_main" name="g127"/>
+                                    <geom class="finger_left_util"/>
+                                    <joint name="joint35" class="finger_left_util"/>
+                                    <joint name="joint36" class="finger_twist"/>
+                                    <site name="s127" class="finger_left_util" size="0.005"/>
+                                    <body pos="0.0225 0 0">
+                                      <geom class="gripper_sticks_main" name="g128"/>
+                                      <geom class="finger_left_util"/>
+                                      <joint name="joint37" class="finger_left_util"/>
+                                      <joint name="joint38" class="finger_twist"/>
+                                      <site name="s128" class="finger_left_util" size="0.005"/>
+                                    </body>
+                                  </body>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                    <body pos="0 -0.075 -0.025" quat="0 0 -0.7071 0.7071">
+                      <body pos="0.0225 0 0">
+                        <geom class="gripper_sticks_main" name="g131"/>
+                        <geom class="finger_left_util"/>
+                        <joint name="joint39" class="finger_adduction"/>
+                        <joint name="joint40" class="finger_twist"/>
+                        <body pos="0.0225 0 0">
+                          <geom class="gripper_sticks_main" name="g132"/>
+                          <geom class="finger_left_util"/>
+                          <joint name="joint41" class="finger_left_util"/>
+                          <site name="s132" class="finger_left_util" size="0.005"/>
+                          <joint name="joint42" class="finger_twist"/>
+                          <body pos="0.0225 0 0">
+                            <geom class="gripper_sticks_main" name="g133"/>
+                            <geom class="finger_left_util"/>
+                            <joint name="joint43" class="finger_left_util"/>
+                            <joint name="joint44" class="finger_twist"/>
+                            <site name="s133" class="finger_left_util" size="0.005"/>
+                            <body pos="0.0225 0 0">
+                              <geom class="gripper_sticks_main" name="g134"/>
+                              <geom class="finger_left_util"/>
+                              <joint name="joint45" class="finger_left_util"/>
+                              <joint name="joint46" class="finger_twist"/>
+                              <site name="s134" class="finger_left_util" size="0.005"/>
+                              <body pos="0.0225 0 0">
+                                <geom class="gripper_sticks_main" name="g135"/>
+                                <geom class="finger_left_util"/>
+                                <joint name="joint47" class="finger_left_util"/>
+                                <joint name="joint48" class="finger_twist"/>
+                                <site name="s135" class="finger_left_util" size="0.005"/>
+                                <body pos="0.0225 0 0">
+                                  <geom class="gripper_sticks_main" name="g136"/>
+                                  <geom class="finger_left_util"/>
+                                  <joint name="joint49" class="finger_left_util"/>
+                                  <joint name="joint50" class="finger_twist"/>
+                                  <site name="s136" class="finger_left_util" size="0.005"/>
+                                  <body pos="0.0225 0 0">
+                                    <geom class="gripper_sticks_main" name="g137"/>
+                                    <geom class="finger_left_util"/>
+                                    <joint name="joint51" class="finger_left_util"/>
+                                    <joint name="joint52" class="finger_twist"/>
+                                    <site name="s137" class="finger_left_util" size="0.005"/>
+                                    <body pos="0.0225 0 0">
+                                      <geom class="gripper_sticks_main" name="g138"/>
+                                      <geom class="finger_left_util"/>
+                                      <joint name="joint53" class="finger_left_util"/>
+                                      <joint name="joint54" class="finger_twist"/>
+                                      <site name="s138" class="finger_left_util" size="0.005"/>
+                                    </body>
+                                  </body>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+
+                    <!-- FINGER RIGHT -->
+                    <body pos="0 0 .0225" quat="0 0 -0.7071 0.7071">
+                      <body pos="0.025 0 0">
+                        <geom class="gripper_sticks_main" name="g21"/>
+                        <geom class="finger_right_util"/>
+                        <joint name="joint55" class="finger_right_util"/>
+                        <joint name="joint56" class="finger_adduction"/>
+                        <joint name="joint57" class="finger_twist"/>
+                        <body pos="0.0225 0 0">
+                          <geom class="gripper_sticks_main" name="g22"/>
+                          <geom class="finger_right_util"/>
+                          <joint name="joint58"  class="finger_right_util"/>
+                          <joint name="joint59"  class="finger_twist"/>
+                          <site name="s22" class="finger_right_util" size="0.005"/>
+                          <body pos="0.0225 0 0">
+                            <geom class="gripper_sticks_main" name="g23"/>
+                            <geom class="finger_right_util"/>
+                            <joint name="joint60"  class="finger_right_util"/>
+                            <joint name="joint61" class="finger_twist"/>
+                            <site name="s23" class="finger_right_util" size="0.005"/>
+                            <body pos="0.0225 0 0">
+                              <geom class="gripper_sticks_main" name="g24"/>
+                              <geom class="finger_right_util"/>
+                              <joint name="joint62" class="finger_right_util"/>
+                              <joint name="joint63" class="finger_twist"/>
+                              <site name="s24" class="finger_right_util" size="0.005"/>
+                              <body pos="0.0225 0 0">
+                                <geom class="gripper_sticks_main" name="g25"/>
+                                <geom class="finger_right_util"/>
+                                <joint name="joint64" class="finger_right_util"/>
+                                <joint name="joint65" class="finger_twist"/>
+                                <site name="s25" class="finger_right_util" size="0.005"/>
+                                <body pos="0.0225 0 0">
+                                  <geom class="gripper_sticks_main" name="g26"/>
+                                  <geom class="finger_right_util"/>
+                                  <joint name="joint66" class="finger_right_util"/>
+                                  <joint name="joint67" class="finger_twist"/>
+                                  <site name="s26" class="finger_right_util" size="0.005"/>
+                                  <body pos="0.0225 0 0">
+                                    <geom class="gripper_sticks_main" name="g27"/>
+                                    <geom class="finger_right_util"/>
+                                    <joint name="joint68" class="finger_right_util"/>
+                                    <joint name="joint69" class="finger_twist"/>
+                                    <site name="s27" class="finger_right_util" size="0.005"/>
+                                    <body pos="0.0225 0 0">
+                                      <geom class="gripper_sticks_main" name="g28"/>
+                                      <geom class="finger_right_util"/>
+                                      <joint name="joint70" class="finger_right_util"/>
+                                      <joint name="joint71" class="finger_twist"/>
+                                      <site name="s28" class="finger_right_util" size="0.005"/>
+                                    </body>
+                                  </body>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <!-- TENDONS -->
+  <tendon>
+    <spatial name="grip_l_11" width="0.001" rgba=".95 .3 .3 1">
+      <site site="sBase"/>
+      <site site="s112"/>
+      <site site="s113"/>
+      <site site="s114"/>
+      <site site="s115"/>
+      <site site="s116"/>
+      <site site="s117"/>
+      <site site="s118"/>
+    </spatial>
+
+    <spatial name="grip_l_12" width="0.001" rgba=".95 .3 .3 1">
+      <site site="sBase"/>
+      <site site="s122"/>
+      <site site="s123"/>
+      <site site="s124"/>
+      <site site="s125"/>
+      <site site="s126"/>
+      <site site="s127"/>
+      <site site="s128"/>
+    </spatial>
+
+    <spatial name="grip_l_13" width="0.001" rgba=".95 .3 .3 1">
+      <site site="sBase"/>
+      <site site="s132"/>
+      <site site="s133"/>
+      <site site="s134"/>
+      <site site="s135"/>
+      <site site="s136"/>
+      <site site="s137"/>
+      <site site="s138"/>
+    </spatial>
+
+    <spatial name="grip_r_21" width="0.001" rgba=".95 .3 .3 1">
+      <site site="sBase"/>
+      <site site="s22"/>
+      <site site="s23"/>
+      <site site="s24"/>
+      <site site="s25"/>
+      <site site="s26"/>
+      <site site="s27"/>
+      <site site="s28"/>
+    </spatial>
+  </tendon>
+
+  <!-- ACTUATORS -->
+  <actuator>
+    <general class="z1" name="motor1" joint="joint1" ctrlrange="-2.61799 2.61799"/>
+    <general class="z1" name="motor2" joint="joint2" ctrlrange="0 2.96706" forcerange="-60 60" gainprm="1500"
+      biasprm="0 -1500 -150"/>
+    <general class="z1" name="motor3" joint="joint3" ctrlrange="-2.87979 0"/>
+    <general class="z1" name="motor4" joint="joint4" ctrlrange="-1.51844 1.51844"/>
+    <general class="z1" name="motor5" joint="joint5" ctrlrange="-1.3439 1.3439"/>
+    <general class="z1" name="motor6" joint="joint6" ctrlrange="-2.79253 2.79253"/>
+
+    <!-- Soft Gripper Actuators -->
+    <cylinder tendon="grip_l_11" area="300"/>
+    <cylinder tendon="grip_l_12" area="300"/>
+    <cylinder tendon="grip_l_13" area="300"/>
+    <cylinder tendon="grip_r_21" area="300"/>
+  </actuator>
+
+  <!-- SENSORS -->
+  <sensor>
+    <accelerometer name="a11_sensor" site="s116"/>
+    <accelerometer name="a12_sensor" site="s126"/>
+    <accelerometer name="a13_sensor" site="s136"/>
+    <accelerometer name="a21_sensor" site="s26"/>
+
+    <gyro name="g11_sensor" site="s116"/>
+    <gyro name="g12_sensor" site="s126"/>
+    <gyro name="g13_sensor" site="s136"/>
+    <gyro name="g21_sensor" site="s26"/>
+  </sensor>
+
+</mujoco>

@@ -1,0 +1,14 @@
+<mujoco model="soft_gripper_tennis_ball_experiment">
+
+    <compiler angle="radian" inertiafromgeom="auto"/>
+    <include file="z1_with_soft_gripper.xml"/>
+    <option solver="CG"/>
+
+    <worldbody>
+        <!-- Tennis Ball -->
+        <body name="tennis_ball" pos="0.5 0 0">
+            <geom type="sphere" size=".05" material="mattennis" mass="100"/>
+            <joint type="free" name="ball_joint"/>
+        </body>
+    </worldbody>
+</mujoco>
