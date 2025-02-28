@@ -97,7 +97,8 @@ This project is **actively being developed**, with improvements including:
 
 - 🔄 **Fine-tuning the reward function** for better grasping behavior.  
 - 🔬 **Exploring alternative RL algorithms (SAC, TD3) for better control.**  
-- 📊 **Adding visualization tools to track training performance.**  
+- 📊 **Adding visualization tools to track training performance.**
+- 🎯 **Add a learning from demonstration.**
 
 ---
 
